@@ -16,9 +16,9 @@ Disclaimer: Our predictions are based solely on data analysis and do not constit
 
 #How the repo works:
 
-1. Step: Get the packages working
+1. Step: Clone the repo and import the packages
 2. Step: Check if the dataset fits your needs
-3. Step: Apadt the parameters in Main
-4. Step: execute the Main
+3. Step: Adapt the parameters in Main.py
+4. Step: execute Main.py
 
 You only need to work with the main.py !
