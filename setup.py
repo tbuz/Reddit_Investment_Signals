@@ -8,7 +8,7 @@ class first_installer():
 
     def install_first_time(self):
         # Define the packages to be installed and imported
-        packages = ['spacytextblob', 'emoji', 'yfinance', 'nltk', 'pandas', 'numpy', 'collections', 'spacy', 'scikit-learn']
+        packages = ['spacytextblob', 'emoji', 'yfinance', 'nltk', 'pandas', 'numpy', 'collections', 'spacy', 'scikit-learn', 'xgboost']
 
         # Install packages if they are not already installed
         for package in packages:
@@ -57,10 +57,13 @@ class first_installer():
         from sklearn.model_selection import train_test_split
         from sklearn import metrics
 
+        try:
         # Configure spaCy
-        nlp = spacy.load("en_core_web_md") # , disable=['parser', 'ner', 'textcat'])
-        # nlp = spacy.load("en_core_web_trf", disable=['parser', 'ner', 'textcat'])
-        nlp.add_pipe('spacytextblob')   # required for sentiment analysis
+            nlp = spacy.load("en_core_web_md") # , disable=['parser', 'ner', 'textcat'])
+            # nlp = spacy.load("en_core_web_trf", disable=['parser', 'ner', 'textcat'])
+            nlp.add_pipe('spacytextblob')   # required for sentiment analysis
+        except:
+            print('Spacy Load unsuccesful')
 
         #TODO: CHANGE this Part
         # Download dataset
