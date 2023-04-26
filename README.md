@@ -16,7 +16,7 @@ Disclaimer: Our predictions are based solely on data analysis and do not constit
 
 #How the repo works:
 
-1. Step: Clone the repoo
+1. Step: Clone the repo
 2. Step: Check if the dataset fits your needs
 3. Step: Adapt the parameters in Main.py
 4. Step: execute Main.py
