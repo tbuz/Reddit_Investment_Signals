@@ -1,3 +1,4 @@
+#### Define Target values
 ##### Target 1
 target_1 = df['success_3m'].loc[df['valid_3m']]
 
@@ -16,14 +17,7 @@ df['change_3m_cat'] = pd.qcut(df['change_3m'].loc[df['valid_3m'] == True],
 target_3 = df['change_3m_cat'].loc[df['valid_3m']] 
 target_3.unique()
 
-
-
-#####
-pd.set_option('display.max_rows', None)
-# features_to_use_in_classifier = []
-# target = "success_3m"
-# final_df = final_df.fillna(0)
-
+###Label Encoder for xGBoost
 #Label Encoder
 from sklearn import preprocessing
 from sklearn.preprocessing import LabelEncoder
@@ -39,22 +33,15 @@ final_df[lab_enc_col] = final_df[lab_enc_col].apply(le.fit_transform)
 
 final_df = final_df.drop(['created_utc', 'id', 'date', 'subreddit_subscribers', 'author', 'day_utc'], axis=1)
 
-
 #Split Dataset into
-
-#target
-# y = df['change_3m_cat'].loc[df['valid_3m']] 
 y = target_3
 
 #variables
 X = final_df # .drop(['success_3m'], axis = 1)
 
-
 #newSplit
 sum_split = len(train_final_df)+len(difference_final_df)
 sum_split_2 = len(train_final_df)+len(test_final_df)+len(difference_final_df)
-
-print(sum_split)
 
 target_3 = target_3.reset_index()
 final_df = final_df.reset_index()
@@ -67,10 +54,3 @@ X_test = final_df.loc[sum_split:sum_split_2, :]
 
 y_train = target_3.iloc[:len(train_final_df)]
 y_test = target_3.loc[sum_split:sum_split_2]
-
-print(len(X_test), len(X_train))
-print(len(y_test), len(y_train))
-
-from google.colab import files
-X.to_csv('wsb_dataset.csv')
-#y.to_csv('wsb_dataset_target.csv')
