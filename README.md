@@ -1,6 +1,7 @@
 # Reddit_Investment_Signals
 
 #About this project
+
 Welcome to the "Reddit_Investment_Signals" repository, where we use the popular subreddit r/wallstreetbets to predict stock values of the S&P500.
 
 The S&P500 index is one of the most widely followed stock indices and includes the 500 largest companies in the United States by market capitalisation. Our approach is to use the collective intelligence of the Wall Street Bets community, which consists of private investors who share their thoughts, opinions and trades on the subreddit.
@@ -11,7 +12,10 @@ Our repository contains code for data collection, pre-processing, modelling and 
 
 Disclaimer: Our predictions are based solely on data analysis and do not constitute financial advice. We recommend that you perform your own due diligence before making any investment decision.
 
+
+
 #How the repo works:
+
 1. Step: Get the packages working
 2. Step: Check if the dataset fits your needs
 3. Step: Apadt the parameters in Main
