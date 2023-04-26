@@ -35,7 +35,7 @@ class organiser_class:
         sp500_change = ''
         return submission_df_sm, sp500_change
 
-    def start_feature_engineering(self, submission_df_sm, sp500_change, train_split_end, test_split_end):
+    def start_feature_engineering(self, submission_df_sm, sp500_change, train_split_end, test_split_end, time_horizon):
         """
         feature engineering
         """
@@ -45,7 +45,7 @@ class organiser_class:
         df = feature_eng.transform_cat_to_num_feature(df)
         df = feature_eng.create_signals(df)
         df = feature_eng.fill_numerical_cols(df)
-        df = feature_eng.removing_unwanted_cols(df)
+        df = feature_eng.removing_unwanted_cols(df, time_horizon)
         train_final_df, test_final_df, difference_final_df,  final_df = feature_eng.cut_dataset_to_time_frame(df, train_split_end, test_split_end)
         return train_final_df, test_final_df, difference_final_df,  final_df
     def start_preTraining(self, target, final_df, df, time_horizon, target_name, train_final_df, difference_final_df, test_final_df):

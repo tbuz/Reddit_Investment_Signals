@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     ### run
     submission_df_sm, sp500_change, train_split_end, test_split_end = instance_of_organiser.get_data()
-    train_final_df, test_final_df, difference_final_df,  final_df= instance_of_organiser.start_feature_engineering(submission_df_sm, sp500_change, train_split_end, test_split_end)
+    train_final_df, test_final_df, difference_final_df,  final_df= instance_of_organiser.start_feature_engineering(submission_df_sm, sp500_change, train_split_end, test_split_end, time_horizon)
     #TODO
     X, y, x_train, x_test, y_train, y_test = instance_of_organiser.start_preTraining(target, final_df, df, time_horizon, target, train_final_df, difference_final_df, test_final_df)
     result = instance_of_organiser.start_xgBoost(X, y, x_train, x_test, y_train, y_test)

@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import datetime
 class feature_engineering():
     def __int__(self):
         self
@@ -35,7 +36,7 @@ class feature_engineering():
         df['valid_1m'] = df['change_1m'].notnull()
         df['valid_3m'] = df['change_3m'].notnull()
 
-        # Join df with S&P500 changes
+        # Join df with S&P500 changes #TODO
         sp500_df = pd.merge(df[['date', 'change_3m']], sp500_change, on='date', how='left')
         sp500_df = sp500_df.drop(['date', 'change_3m'], axis=1)
         df = pd.concat([df, sp500_df], axis=1)
@@ -142,7 +143,7 @@ class feature_engineering():
 
         return df
 
-    def removing_unwanted_cols(self, df):
+    def removing_unwanted_cols(self, df, time_horizon):
         #TODO: Timeframe
 
         # Remove unwanted columns (except for target, which is dropped later)
@@ -162,27 +163,25 @@ class feature_engineering():
                             'SP500_change_1d', 'SP500_change_3d', 'SP500_change_1w',
                             'SP500_change_1m', 'SP500_change_3m']
 
-        final_df = df.loc[df['valid_3m']].copy().drop(columns=unwanted_columns)
+        final_df = df.loc[df[f'valid_{time_horizon}']].copy().drop(columns=unwanted_columns)
 
         return final_df
     def cut_dataset_to_time_frame(self, final_df, train_split_end, test_split_end ):
         #### Train-Test-Split
-
         final_df['split_date'] = final_df['created_utc']
 
-        train_split_end = 1625097600 #TODO - get parameters from Orchestrator
-        test_split_start = 1625097600
-        test_split_end = 1633046400
+        train_split_end_date = datetime.datetime.strptime(train_split_end, '%d-%m-%Y')
+        train_split_end_conv = int(train_split_end_date.timestamp())
+        test_split_start_conv = int(train_split_end_date.timestamp())
 
-        #TODO: Clean
-        train_final_df =  final_df[final_df['split_date'] < train_split_end]
-        #test_final_df =  final_df[final_df['split_date'] >= 1633046400 and final_df['split_date'] < 1640995200] #Q4 2021
-        test_final_df =  final_df[final_df['split_date'].between(test_split_start, test_split_end)]
-        #test_final_df =  final_df[final_df['split_date'] >= 1640995200 and final_df['split_date'] < 1648771200] #Q1 2022
-        #test_final_df =  final_df[final_df['split_date'].between(1640995200, 1648771200)]
-        difference_final_df = final_df[final_df['split_date'].between(train_split_end, test_split_start)]
+        test_split_end_date = datetime.datetime.strptime(test_split_end, '%d-%m-%Y')
+        test_split_end_conv = int(test_split_end_date.timestamp())
 
-        print(len(train_final_df))
-        print(len(test_final_df))
+        train_final_df =  final_df[final_df['split_date'] < train_split_end_conv]
+        test_final_df =  final_df[final_df['split_date'].between(test_split_start_conv, test_split_end_conv)]
+        difference_final_df = final_df[final_df['split_date'].between(train_split_end_conv, test_split_start_conv)]
+
+        #print(len(train_final_df))
+        #print(len(test_final_df))
 
         return train_final_df, test_final_df, difference_final_df,  final_df
