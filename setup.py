@@ -8,7 +8,7 @@ class first_installer():
 
     def install_first_time(self):
         # Define the packages to be installed and imported
-        packages = ['spacytextblob', 'emoji', 'yfinance', 'nltk', 'pandas', 'numpy', 'collections', 'spacy', 'scikit-learn', 'xgboost']
+        packages = ['spacytextblob', 'emoji', 'yfinance', 'nltk', 'pandas', 'numpy', 'collections', 'spacy', 'scikit-learn', 'xgboost'] #TODO: Versions
 
         # Install packages if they are not already installed
         for package in packages:
@@ -35,7 +35,7 @@ class first_installer():
         import pandas as pd
         import numpy as np
         from collections import Counter
-        #TODO: uncomment next line
+        #TODO: uncomment next line yfinance
         #import yfinance as yf
 
         # --- Time formatting

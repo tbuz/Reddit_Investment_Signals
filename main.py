@@ -4,7 +4,7 @@ from organiser import organiser_class
 # set your PARAMETER here
 # in days (1, 3, 7, 30, 90)
 time_horizon = 3
-# start and end-date in DD-MM-YYYY
+# start and end-date in DD-MM-YYYY (min: - max:)
 start_date = '01-01-2021'
 end_date = '01-04-2021'
 # target (see Read_me or Paper)
@@ -12,6 +12,7 @@ target = 'target_1'
 
 #if you set your parameter press play!
 if __name__ == '__main__':
+    #TODO: in eine Klasse // Bash script // Parameter Grenzen
     instance_of_organiser = organiser_class(time_horizon, start_date, end_date, target)
     instance_of_organiser.print_info()
     instance_of_organiser.get_setup()

@@ -1,4 +1,4 @@
-from pre_Training import pre_Training_exe
+from pre_training import pre_Training_exe
 from ml_algorithms import ml_algorithms
 from feature_engineering import feature_engineering
 from setup import first_installer
