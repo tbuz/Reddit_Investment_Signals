@@ -11,8 +11,16 @@ if __name__ == '__main__':
     # target (see Read_me or Paper)
     target = 'target_1'
 
-    # if you set your parameter press play!
+    #data submissions_path
+    submissions_path = '/Users/moritzschneider/Downloads/WSB_DSAA/datasets/submissions_WSB_20220703.json'
+    sp500_wiki = '/Users/moritzschneider/Downloads/WSB_DSAA/datasets/220924_SP500_wiki'
+    stock_price = '/Users/moritzschneider/Downloads/WSB_DSAA/datasets/sp500_stock_prices_2022-07-03.json'
 
+    #TODO: change data source
+    path = '/Users/moritzschneider/Downloads/WSB_DSAA/datasets'
+
+
+    # if you set your parameter press play!
     #TODO: in eine Klasse // Bash script // Parameter Grenzen
     runner = runner()
-    runner.run_organizer(time_horizon= time_horizon, start_date = start_date, end_date=end_date, target= target)
+    runner.run_organizer(time_horizon= time_horizon, start_date = start_date, end_date=end_date, target= target, submissions_path = submissions_path, sp500_wiki_path = sp500_wiki, stock_price = stock_price)
