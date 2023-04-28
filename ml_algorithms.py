@@ -2,12 +2,18 @@
 import xgboost as xgb
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import balanced_accuracy_score
+from sklearn.metrics import classification_report
 
 class ml_algorithms():
     def __int__(self):
         self
 
-    def ml_xgBoost(self, df, X_train, y_train, X_test, y_test):
+    def ml_xgBoost(self, df, label_encoder, X_train, y_train, X_test, y_test, time_horizon, target):
+
+        X_train = X_train.apply(label_encoder.fit_transform)
+        X_test = X_test.apply(label_encoder.fit_transform)
+        y_train = y_train.apply(label_encoder.fit_transform)
+        y_test = y_test.apply(label_encoder.fit_transform)
 
         # xgBoost Classifier
         # Create an instance of the XGBClassifier class with some hyperparameters
@@ -15,7 +21,7 @@ class ml_algorithms():
         # use_label_encoder=True: use scikit-learn's LabelEncoder to encode the target variable
         # max_depth=15: maximum depth of each tree in the ensemble
         # subsample=0.5: fraction of the training data to use for each tree
-        xgb_cl = xgb.XGBClassifier(enable_categorical=True, use_label_encoder=True, max_depth=15, subsample=0.5)
+        xgb_cl = xgb.XGBClassifier(max_depth=15, subsample=0.5)
 
         # Train the XGBoost classifier on the training data
         # X_train: the training feature matrix
@@ -31,37 +37,61 @@ class ml_algorithms():
 
         # Compute the balanced accuracy score of the XGBoost classifier on the test data
         # y_test: the true labels of the test data
-        print(balanced_accuracy_score(y_test, preds))
+        print('Balanced accuracy: ', balanced_accuracy_score(y_test, preds))
+
+        # target_names = ['false', 'true']
+        print(classification_report(y_test, preds))  # , target_names=target_names))
 
         # Print the predicted class probabilities of the test data
-        print(preds_proba)
+        # print(preds_proba)
 
+        #Validation if xgBoost Works
+        #print(y_test.mean())
+        #print(preds.mean())
 
-        #TODO: adapt to target
+    # TODO: Target abfragen:
 
-        #list(preds).index(True)
-        R = ['3','4']
-        N = []
+        # #TODO: adapt to target
+        if target == 'target_3':
+            #list(preds).index(True)
+            R = ['3','4']
+            N = []
 
-        for i in range(len(preds)):
+            for i in range(len(preds)):
 
-            if preds[i] in R:
-                N.append(i)
+                if preds[i] in R:
+                    N.append(i)
 
-        print(N)
+            #print(N)
 
-        values = X_test.iloc[N].index.values.tolist()
+            #TODO:
+            values = X_test.iloc[N].index.values.tolist()
 
-        df_validated = df.loc[df['valid_3m']].copy()
-        df_validated['change_3m'] += 100
-        df_validated['change_3m'].iloc[values].mean()
+            df_validated = df.loc[df[f'valid_{time_horizon}']].copy()
+            df_validated[f'change_{time_horizon}'] += 100
+            print('Stock Performance: ',df_validated[f'change_{time_horizon}'].iloc[values].mean())
+            return df_validated
 
-        values = X_test.iloc[N].index.values.tolist()
+        if target == 'target_1' or target == 'target_2':
+            #TODO: Target abfragen:
+            # list(preds).index(True)
+            True_value = [1]
+            indexing_value = []
 
-        df_validated = df.loc[df['valid_3m']].copy()
-        df_validated['change_3m'] += 100
-        df_validated['change_3m'].iloc[values].mean()
+            for i in range(len(preds)):
 
-        df_validated['change_3m'].iloc[values]
+                if preds[i] in True_value:
+                    indexing_value.append(i)
 
-        return df_validated
+            #print(indexing_value)
+            #
+            # #TODO:
+            values = X_test.iloc[indexing_value].index.values.tolist()
+            df_validated = df.loc[df[f'valid_{time_horizon}']].copy()
+            df_validated[f'change_{time_horizon}'] += 100
+            print('Stock Performance: ',df_validated[f'change_{time_horizon}'].iloc[values].mean())
+
+            return df_validated
+
+        else:
+            print('Wrong Target')

@@ -9,7 +9,6 @@ class feature_engineering():
         df = submission_df_sm.copy()
 
         # Create additional potential target features:
-
         # Has the post been successful over different time frames?
         # distinguish: negative = False, positive = True, NaN = None
         df['success_1d'] = df['change_1d'] > 0
@@ -36,11 +35,17 @@ class feature_engineering():
         df['valid_1m'] = df['change_1m'].notnull()
         df['valid_3m'] = df['change_3m'].notnull()
 
+        #df['date'] = df.index
+        sp500_change['date'] = sp500_change.index
+
+        df['date'] = pd.to_datetime(df['date'])
+        sp500_change['date'] = pd.to_datetime(sp500_change['date'])
+
+
         # Join df with S&P500 changes #TODO
         sp500_df = pd.merge(df[['date', 'change_3m']], sp500_change, on='date', how='left')
         sp500_df = sp500_df.drop(['date', 'change_3m'], axis=1)
         df = pd.concat([df, sp500_df], axis=1)
-
         return df
 
     def create_binary_feature(self, df):
@@ -162,8 +167,12 @@ class feature_engineering():
                             'send_replies_binary',
                             'SP500_change_1d', 'SP500_change_3d', 'SP500_change_1w',
                             'SP500_change_1m', 'SP500_change_3m']
-
-        final_df = df.loc[df[f'valid_{time_horizon}']].copy().drop(columns=unwanted_columns)
+        for i in unwanted_columns:
+            try:
+                #TODO: at Tolga: always 3m?
+                final_df = df.loc[df[f'valid_3m']].copy().drop(columns=i)
+            except:
+                print(i)
 
         return final_df
     def cut_dataset_to_time_frame(self, final_df, train_split_end, test_split_end ):
