@@ -14,11 +14,11 @@ if __name__ == '__main__':
     target = 'target_2'
 
     #data submissions_path
-    submissions_path = '/Users/moritzschneider/Downloads/WSB_DSAA/datasets/stock_dfs_2022-07-03.json'
-    sp500_wiki = '/Users/moritzschneider/Downloads/WSB_DSAA/datasets/220924_SP500_wiki'
-    stock_price_path = '/Users/moritzschneider/Downloads/WSB_DSAA/datasets/sp500_stock_prices_2022-07-03.json'
+    submissions_path = '/Users/moritzschneider/Downloads/submission_df_pickle' #'submission_df_pickle'
+    config_file = '/Users/moritzschneider/Downloads/sp500_data.csv' #'sp500_data.csv'
+    sp500_data = '/Users/moritzschneider/Downloads/wsb_column_details.csv' #'wsb_column_details.csv'
 
     # if you set your parameter press play!
     #TODO: in eine Klasse // Bash script // Parameter Grenzen
     runner = runner()
-    runner.run_organizer(time_horizon= time_horizon, start_date = start_date, end_date=end_date, target= target, submissions_path = submissions_path, sp500_wiki_path = sp500_wiki, stock_price_path = stock_price_path, flag = installed_flag)
+    runner.run_organizer(time_horizon= time_horizon, start_date = start_date, end_date=end_date, target= target, submissions_path = submissions_path, sp500_data = sp500_data, config_file = config_file, flag = installed_flag)

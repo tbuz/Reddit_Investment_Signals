@@ -7,7 +7,7 @@ class first_installer():
     def __int__(self):
         self
 
-    def install_first_time(self, submission_df, stock_price, sp500_wiki):
+    def install_first_time(self):
         # Define the packages to be installed and imported
         packages = ['spacytextblob', 'emoji', 'yfinance', 'nltk', 'pandas', 'numpy', 'collections', 'spacy', 'scikit-learn', 'xgboost'] #TODO: Versions
 
@@ -71,18 +71,17 @@ class first_installer():
         #!curl -O https://owncloud.hpi.de/s/EAmstS3hKgvWiPr/download #TODO: CHANGE
         #!tar -zxvf download
 
-    def load_data_existing(self):
+    def load_data_existing(self, submission_df, config_file, sp500_data):
         # Load dataset
         # Standard data import anywhere else:
         try:
-          submission_df = pd.read_pickle('/Users/moritzschneider/Downloads/submission_df_pickle')
+          submission_df = pd.read_pickle(submission_df) #
         except:
             print('Submissions Load Fail')
 
         # Drop unnecessary columns:
         # Import list of columns to be removed:
-        column_list = pd.read_csv('/Users/moritzschneider/Downloads/wsb_column_details.csv', sep=';')
-
+        column_list = pd.read_csv(config_file, sep=';') #config_file
 
         exclude_columns = column_list.loc[column_list['Use for Classification'] == 'NO']['Column'].apply(lambda x: x.strip()).to_list()
 
@@ -167,6 +166,6 @@ class first_installer():
         # print(sp500_change)
         #
         # sp500_change['date'] = sp500_change.index.strftime('%Y-%m-%d')
-        sp500_change = pd.read_csv('/Users/moritzschneider/Downloads/sp500_data.csv')
+        sp500_change = pd.read_csv(sp500_data) #sp500_wiki
 
         return submission_df_sm, sp500_change

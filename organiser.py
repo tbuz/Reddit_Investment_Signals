@@ -23,15 +23,15 @@ class organiser_class:
         print(f"The end date is {self.end_date}.")
         print(f"The target is {self.target}.")
 
-    def get_setup(self, submission_df, stock_price, sp500_wiki, flag):
+    def get_setup(self, submission_df, config_file, sp500_data, flag):
         """
         install python packages
         """
         print('Processing....')
         first = first_installer()
         if flag != True:
-            first.install_first_time(submission_df, stock_price, sp500_wiki)
-        submission_df_sm, sp500_change = first.load_data_existing()
+            first.install_first_time()
+        submission_df_sm, sp500_change = first.load_data_existing(submission_df, config_file, sp500_data)
         return submission_df_sm, sp500_change
 
     def json_to_dataframe(self, json_data):
@@ -137,13 +137,13 @@ class organiser_class:
 class runner():
     def __int__(self):
         self
-    def run_organizer(self, time_horizon, start_date, end_date, target, submissions_path, sp500_wiki_path, stock_price_path, flag):
+    def run_organizer(self, time_horizon, start_date, end_date, target, submissions_path, sp500_data, config_file, flag):
         #Displays all parameters
         instance_of_organiser = organiser_class(time_horizon, start_date, end_date, target)
         instance_of_organiser.print_info()
 
         #Start Setup
-        submission_df_sm, sp500_change = instance_of_organiser.get_setup(submissions_path,sp500_wiki_path, stock_price_path,  flag)
+        submission_df_sm, sp500_change = instance_of_organiser.get_setup(submissions_path,sp500_data, config_file,  flag)
 
         #Start Feature Engineering
         train_final_df, test_final_df, difference_final_df, final_df, df_for_target = instance_of_organiser.start_feature_engineering(
