@@ -3,7 +3,8 @@ import xgboost as xgb
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import balanced_accuracy_score
 from sklearn.metrics import classification_report
-
+from sklearn.linear_model import SGDClassifier
+import numpy as np
 class ml_algorithms():
     def __int__(self):
         self
@@ -90,3 +91,110 @@ class ml_algorithms():
 
         else:
             print('Wrong Target')
+
+    def ml_SGD_classifier(self, X_train, y_train, X_test, y_test):
+
+    # Loss hinge
+        sgd_clf = SGDClassifier(loss='hinge', penalty='l2',
+                                random_state=42, alpha=1e-3,
+                                max_iter=2000, tol=0.001).fit(X_train.fillna(0), y_train)
+
+        predicted = sgd_clf.predict(X_test.fillna(0))
+
+        # Mean Accuracy
+        print(f"Class Distribution: \t{np.mean(y_test == True)}")
+        print(f"Accuracy: \t\t{np.mean(y_test.squeeze() == predicted)}")
+        print(classification_report(y_test, predicted))
+
+    #Loss modified huber
+        sgd_clf = SGDClassifier(loss='modified_huber', penalty='elasticnet',
+                                random_state=42, l1_ratio=0.05, alpha=1e-3,
+                                max_iter=500, tol=0.001).fit(X_train.fillna(0), y_train)
+
+        predicted = sgd_clf.predict(X_test.fillna(0))
+
+        # Mean Accuracy
+        print(f"Class Distribution: \t{np.mean(y_test == True)}")
+        print(f"Accuracy: \t\t{np.mean(y_test.squeeze() == predicted)}")
+        print(classification_report(y_test, predicted))
+
+        combined_list_sgd = zip(sgd_clf.feature_names_in_, sgd_clf.coef_[0])
+
+        features = []
+        for feature in combined_list_sgd:
+            if feature[1] > 0.0:
+                features.append(feature)
+
+        features = features.sort(key=lambda x: x[1], reverse=True)
+        print(features)
+
+    def ml_KNN(self, X_train, y_train, X_test, y_test):
+        from sklearn.neighbors import KNeighborsClassifier
+        from sklearn.metrics import balanced_accuracy_score
+
+        knn = KNeighborsClassifier(n_neighbors=3)
+
+        # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
+
+        knn.fit(X_train.fillna(0), y_train)
+        y_pred = knn.predict(X_test.fillna(0))
+
+        print("KNN:", balanced_accuracy_score(y_test, y_pred))
+        print(classification_report(y_test, y_pred))
+
+    def ml_Random_Forrest(self,  X_train, y_train, X_test, y_test):
+        from sklearn.ensemble import RandomForestClassifier
+
+        clf = RandomForestClassifier(n_estimators=10, max_depth=10)
+
+        clf = clf.fit(X_train.fillna(0), y_train)
+
+        y_pred = clf.predict(X_test.fillna(0))
+
+        print("Random Forrest:", balanced_accuracy_score(y_test, y_pred))
+        print(classification_report(y_test, y_pred))
+
+        combined_list_random_forrest = zip(X_test.columns, clf.feature_importances_)
+
+        features = []
+        for feature in combined_list_random_forrest:
+            if feature[1] > 0.0:
+                features.append(feature)
+
+        features = features.sort(key=lambda x: x[1], reverse=True)
+        print(features)
+
+    def ml_SVM(self, X_train, y_train, X_test, y_test):
+        from sklearn import svm
+        svm_clf = svm.SVC().fit(X_train.fillna(0), y_train)
+        # kernel='linear' necessary for feature importance eval, but extremely slow
+
+        predicted = svm_clf.predict(X_test.fillna(0))
+
+        print(f"Class Distribution: \t{np.mean(y_test == True)}")
+        print(f"Accuracy: \t\t{np.mean(y_test.squeeze() == predicted)}")
+
+        print(classification_report(y_test, predicted))
+
+    def ml_MLP(self, X_train, y_train, X_test, y_test):
+        from sklearn.preprocessing import StandardScaler
+        scaler = StandardScaler()
+
+        scaler.fit(X_train)
+        X_train_scaled = scaler.transform(X_train.fillna(0))
+        # apply same transformation to test data
+        X_test_scaled = scaler.transform(X_test.fillna(0))
+
+        from sklearn.neural_network import MLPClassifier
+        clf = MLPClassifier(max_iter=1000, hidden_layer_sizes=(10, 10, 10, 10))
+
+        clf.fit(X_train_scaled, y_train)
+
+        # predict for simple class label predictions
+        predicted = clf.predict(X_test_scaled)
+
+        # predict_proba for probability distributions
+        predicted_proba = clf.predict_proba(X_test_scaled)
+        #print(predicted_proba)
+
+        print(classification_report(y_test, predicted))
