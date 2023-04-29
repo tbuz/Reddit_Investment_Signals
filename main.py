@@ -7,11 +7,12 @@ if __name__ == '__main__':
     # set your PARAMETER here
     # in days (1, 3, 7, 30, 90)
     time_horizon = '3d'
-    # start and end-date in DD-MM-YYYY (min: - max:)
-    start_date = '01-01-2021'
-    end_date = '01-06-2021'
+    #TODO
+    # start and end-date of Timeframe you want to look at in DD-MM-YYYY (min: - max:)
+    start_date = '01-07-2021'
+    end_date = '01-10-2021'
     # target (see Read_me or Paper)
-    target = 'target_1'
+    target = 'target_2'
 
     #data submissions_path
     submissions_path = '/Users/moritzschneider/Downloads/WSB_DSAA/datasets/stock_dfs_2022-07-03.json'

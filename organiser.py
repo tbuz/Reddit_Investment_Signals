@@ -88,25 +88,27 @@ class organiser_class:
         #df = feature_eng.transform_cat_to_num_feature(df)
         df = feature_eng.create_signals(df)
         df = feature_eng.fill_numerical_cols(df)
+        target_df = df
         df = feature_eng.removing_unwanted_cols(df, time_horizon)
         train_final_df, test_final_df, difference_final_df,  final_df = feature_eng.cut_dataset_to_time_frame(df, train_split_end, test_split_end)
-        return train_final_df, test_final_df, difference_final_df,  final_df
-    def start_preTraining(self, target, final_df, time_horizon, target_name, train_final_df, difference_final_df, test_final_df):
+
+        return train_final_df, test_final_df, difference_final_df,  final_df, target_df
+    def start_preTraining(self, target, final_df, time_horizon, target_name, train_final_df, difference_final_df, test_final_df, df_for_target):
         """
         start converting data into usable dataframe for ml_algorithms
         """
         pre_Training = pre_Training_exe()
         #TODO: Set -> dataframe ändern
-        target_df = pre_Training.set_target(final_df, target_name, time_horizon)
+        target_df = pre_Training.set_target(df_for_target, target_name, time_horizon)
         final_df, label_encoder = pre_Training.label_encode_df(final_df)
         X, y, x_train, x_test, y_train, y_test = pre_Training.train_test_split(target_df, final_df, train_final_df, difference_final_df, test_final_df)
         return X, y, x_train, x_test, y_train, y_test, label_encoder
-    def start_xgBoost(self, df,label_encoder, X, y, x_train, x_test, y_train, y_test, time_horizon, target):
+    def start_xgBoost(self, df,label_encoder, X, y, x_train, x_test, y_train, y_test, time_horizon, target, df_for_target):
         """
         xg Boost to get performance
         """
         ml_algo = ml_algorithms()
-        result = ml_algo.ml_xgBoost(df,label_encoder, x_train, y_train, x_test, y_test, time_horizon, target)
+        result = ml_algo.ml_xgBoost(df,label_encoder, x_train, y_train, x_test, y_test, time_horizon, target, df_for_target)
         return result
 
     def convert_html(self, sp500_wiki_path):
@@ -127,7 +129,7 @@ class runner():
     def run_organizer(self, time_horizon, start_date, end_date, target, submissions_path, sp500_wiki_path, stock_price_path, flag):
         instance_of_organiser = organiser_class(time_horizon, start_date, end_date, target)
         instance_of_organiser.print_info()
-        submission_df_sm, sp500_change = instance_of_organiser.get_setup(submissions_path, stock_price_path, sp500_wiki_path, flag)
+        submission_df_sm, sp500_change = instance_of_organiser.get_setup(submissions_path,sp500_wiki_path, stock_price_path,  flag)
 
         # ### run
         # #TODO: Schreibe check, ob Dokument in Path - wenn nicht laden und speichern
@@ -163,13 +165,15 @@ class runner():
         #
         # #sp500_symbols, stock_idx = instance_of_organiser.convert_html(sp500_wiki_path)
 
-        train_final_df, test_final_df, difference_final_df, final_df = instance_of_organiser.start_feature_engineering(
+        train_final_df, test_final_df, difference_final_df, final_df, df_for_target = instance_of_organiser.start_feature_engineering(
             submission_df_sm, sp500_change, start_date, end_date, time_horizon)
         # TODO
         X, y, x_train, x_test, y_train, y_test, label_encoder = instance_of_organiser.start_preTraining(target, final_df,
                                                                                          time_horizon, target,
                                                                                          train_final_df,
                                                                                          difference_final_df,
-                                                                                         test_final_df)
-        result = instance_of_organiser.start_xgBoost(final_df, label_encoder, X, y, x_train, x_test, y_train, y_test, time_horizon, target)
+                                                                                         test_final_df, df_for_target)
+
+        result = instance_of_organiser.start_xgBoost(final_df, label_encoder, X, y, x_train, x_test, y_train, y_test, time_horizon, target, df_for_target)
+
         return result

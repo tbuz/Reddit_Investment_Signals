@@ -14,10 +14,13 @@ class pre_Training_exe:
             target_df = target_1
         ##### Target 2
         if target_name == 'target_2':
+            df = df.fillna(0)
             target_2 = (df[f'change_{timeframe}'] > df[f'SP500_change_{timeframe}']).loc[df[f'valid_{timeframe}']]
+            #print(target_2)
             target_df = target_2
         ##### Target 3
         if target_name == 'target_3':
+            df = df.fillna(0)
             df[f'change_{timeframe}'].loc[df[f'valid_{timeframe}'] == True].head()
             # Create categorical target column out of numerical values using quantiles:
             amount_of_bins = 5
@@ -52,8 +55,7 @@ class pre_Training_exe:
         #Split Dataset into
         y = target
 
-        #variables
-        X = final_df # .drop(['success_3m'], axis = 1)
+        X = final_df#.drop(['success_3m'], axis = 1)
 
         #newSplit
         sum_split = len(train_final_df)+len(difference_final_df)

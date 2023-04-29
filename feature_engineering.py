@@ -167,12 +167,7 @@ class feature_engineering():
                             'send_replies_binary',
                             'SP500_change_1d', 'SP500_change_3d', 'SP500_change_1w',
                             'SP500_change_1m', 'SP500_change_3m']
-        for i in unwanted_columns:
-            try:
-                #TODO: at Tolga: always 3m?
-                final_df = df.loc[df[f'valid_3m']].copy().drop(columns=i)
-            except:
-                print(i)
+        final_df = df.loc[df[f'valid_3m']].copy().drop(columns=unwanted_columns)
 
         return final_df
     def cut_dataset_to_time_frame(self, final_df, train_split_end, test_split_end ):

@@ -8,7 +8,7 @@ class ml_algorithms():
     def __int__(self):
         self
 
-    def ml_xgBoost(self, df, label_encoder, X_train, y_train, X_test, y_test, time_horizon, target):
+    def ml_xgBoost(self, df, label_encoder, X_train, y_train, X_test, y_test, time_horizon, target, df_for_target):
 
         X_train = X_train.apply(label_encoder.fit_transform)
         X_test = X_test.apply(label_encoder.fit_transform)
@@ -46,8 +46,8 @@ class ml_algorithms():
         # print(preds_proba)
 
         #Validation if xgBoost Works
-        #print(y_test.mean())
-        #print(preds.mean())
+        # print(y_test.mean())
+        # print(preds.mean())
 
         if target == 'target_3':
             #list(preds).index(True)
@@ -60,17 +60,21 @@ class ml_algorithms():
                     N.append(i)
 
             #print(N)
-
+            df = df_for_target
             values = X_test.iloc[N].index.values.tolist()
 
             df_validated = df.loc[df[f'valid_{time_horizon}']].copy()
             df_validated[f'change_{time_horizon}'] += 100
+            print(df_validated[f'change_{time_horizon}'].iloc[values])
             print('Stock Performance: ',df_validated[f'change_{time_horizon}'].iloc[values].mean())
             return df_validated
 
         if target == 'target_1' or target == 'target_2':
+
             True_value = [1]
             indexing_value = []
+
+            df = df_for_target
 
             for i in range(len(preds)):
 
