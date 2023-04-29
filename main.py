@@ -6,12 +6,12 @@ if __name__ == '__main__':
     installed_flag = True
     # set your PARAMETER here
     # in days {'1d', '3d', '1w', '1m', '3m'}
-    time_horizon = '3d'
+    time_horizon = '3m'
     # start and end-date of Timeframe you want to look at in DD-MM-YYYY
     start_date = '01-07-2021'
     end_date = '01-10-2021'
     # target {'target_1','target_2', 'target_3' } (see Read_me or Paper)
-    target = 'target_2'
+    target = 'target_1'
 
     #data submissions_path
     submissions_path = '/Users/moritzschneider/Downloads/submission_df_pickle' #'submission_df_pickle'
