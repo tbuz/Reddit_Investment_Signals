@@ -49,9 +49,6 @@ class ml_algorithms():
         #print(y_test.mean())
         #print(preds.mean())
 
-    # TODO: Target abfragen:
-
-        # #TODO: adapt to target
         if target == 'target_3':
             #list(preds).index(True)
             R = ['3','4']
@@ -64,7 +61,6 @@ class ml_algorithms():
 
             #print(N)
 
-            #TODO:
             values = X_test.iloc[N].index.values.tolist()
 
             df_validated = df.loc[df[f'valid_{time_horizon}']].copy()
@@ -73,8 +69,6 @@ class ml_algorithms():
             return df_validated
 
         if target == 'target_1' or target == 'target_2':
-            #TODO: Target abfragen:
-            # list(preds).index(True)
             True_value = [1]
             indexing_value = []
 
@@ -83,9 +77,6 @@ class ml_algorithms():
                 if preds[i] in True_value:
                     indexing_value.append(i)
 
-            #print(indexing_value)
-            #
-            # #TODO:
             values = X_test.iloc[indexing_value].index.values.tolist()
             df_validated = df.loc[df[f'valid_{time_horizon}']].copy()
             df_validated[f'change_{time_horizon}'] += 100

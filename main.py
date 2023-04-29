@@ -6,7 +6,7 @@ if __name__ == '__main__':
     installed_flag = True
     # set your PARAMETER here
     # in days (1, 3, 7, 30, 90)
-    time_horizon = '3m'
+    time_horizon = '3d'
     # start and end-date in DD-MM-YYYY (min: - max:)
     start_date = '01-01-2021'
     end_date = '01-06-2021'
