@@ -2,26 +2,21 @@
 from organiser import runner
 
 if __name__ == '__main__':
-    #All packages are installed:
+    #All packages are installed {True, False}
     installed_flag = True
     # set your PARAMETER here
-    # in days (1, 3, 7, 30, 90)
+    # in days {'1d', '3d', '1w', '1m', '3m'}
     time_horizon = '3d'
-    #TODO
-    # start and end-date of Timeframe you want to look at in DD-MM-YYYY (min: - max:)
+    # start and end-date of Timeframe you want to look at in DD-MM-YYYY
     start_date = '01-07-2021'
     end_date = '01-10-2021'
-    # target (see Read_me or Paper)
+    # target {'target_1','target_2', 'target_3' } (see Read_me or Paper)
     target = 'target_2'
 
     #data submissions_path
     submissions_path = '/Users/moritzschneider/Downloads/WSB_DSAA/datasets/stock_dfs_2022-07-03.json'
     sp500_wiki = '/Users/moritzschneider/Downloads/WSB_DSAA/datasets/220924_SP500_wiki'
     stock_price_path = '/Users/moritzschneider/Downloads/WSB_DSAA/datasets/sp500_stock_prices_2022-07-03.json'
-
-    #TODO: change data source
-    path = '/Users/moritzschneider/Downloads/WSB_DSAA/datasets'
-
 
     # if you set your parameter press play!
     #TODO: in eine Klasse // Bash script // Parameter Grenzen

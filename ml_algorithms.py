@@ -92,6 +92,8 @@ class ml_algorithms():
         else:
             print('Wrong Target')
 
+
+###The Following Code is not in use, but can be easily used by calling the function and adding always:  X_train, y_train, X_test, y_test
     def ml_SGD_classifier(self, X_train, y_train, X_test, y_test):
 
     # Loss hinge

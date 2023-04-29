@@ -111,6 +111,17 @@ class organiser_class:
         result = ml_algo.ml_xgBoost(df,label_encoder, x_train, y_train, x_test, y_test, time_horizon, target, df_for_target)
         return result
 
+    def start_ML(self, df,label_encoder, X, y, x_train, x_test, y_train, y_test, time_horizon, target, df_for_target ):
+        """
+        Not used, unless manually uncommented in organiser
+        """
+        ml_algo = ml_algorithms()
+        ml_algo.ml_KNN(x_train, x_test, y_train, y_test)
+        ml_algo.ml_MLP(x_train, x_test, y_train, y_test)
+        ml_algo.ml_SVM(x_train, x_test, y_train, y_test)
+        ml_algo.ml_Random_Forrest(x_train, x_test, y_train, y_test)
+        ml_algo.ml_SGD_classifier(x_train, x_test, y_train, y_test)
+
     def convert_html(self, sp500_wiki_path):
         sp500_wiki = pd.read_html(sp500_wiki_path)[0]
         sp500_symbols = sp500_wiki['Symbol'].tolist()
@@ -127,53 +138,28 @@ class runner():
     def __int__(self):
         self
     def run_organizer(self, time_horizon, start_date, end_date, target, submissions_path, sp500_wiki_path, stock_price_path, flag):
+        #Displays all parameters
         instance_of_organiser = organiser_class(time_horizon, start_date, end_date, target)
         instance_of_organiser.print_info()
+
+        #Start Setup
         submission_df_sm, sp500_change = instance_of_organiser.get_setup(submissions_path,sp500_wiki_path, stock_price_path,  flag)
 
-        # ### run
-        # #TODO: Schreibe check, ob Dokument in Path - wenn nicht laden und speichern
-        # #sp500_change = instance_of_organiser.get_data(stock_price)
-        #
-        # with open(stock_price_path, 'r') as f:
-        #     stock_prices = json.load(f)
-        #
-        # for i, s in enumerate(stock_prices):
-        #     stock_prices[i] = pd.DataFrame.from_dict(s)
-        #     stock_prices[i].index = pd.to_datetime(stock_prices[i].index, format='%Y-%m-%d')
-        #
-        # print('stock_price loaded')
-        # #submission_df_sm = instance_of_organiser.get_data(submissions_path)
-        #
-        # with open(submissions_path, 'r') as f:
-        #     stock_dfs_filtered = json.load(f)
-        #
-        # ticker_list = []
-        #
-        # for i, s in enumerate(stock_dfs_filtered):
-        #     stock_dfs_filtered[i] = pd.DataFrame.from_dict(s)
-        #     stock_dfs_filtered[i].index = pd.to_datetime(stock_dfs_filtered[i].index, format='%Y-%m-%d')
-        #
-        #     # Save list of tickers for further use
-        #     ticker_list.append(stock_dfs_filtered[i].columns[0])
-        #
-        #     # Rename ticker_specific columns:
-        #     stock_dfs_filtered[i] = stock_dfs_filtered[i].rename(columns={stock_dfs_filtered[i].columns[0]: 'count',
-        #                                                                   stock_dfs_filtered[i].columns[
-        #                                                                       8]: 'count_window'})
-        #
-        #
-        # #sp500_symbols, stock_idx = instance_of_organiser.convert_html(sp500_wiki_path)
-
+        #Start Feature Engineering
         train_final_df, test_final_df, difference_final_df, final_df, df_for_target = instance_of_organiser.start_feature_engineering(
             submission_df_sm, sp500_change, start_date, end_date, time_horizon)
-        # TODO
+
+        #Start Pre Training Code
         X, y, x_train, x_test, y_train, y_test, label_encoder = instance_of_organiser.start_preTraining(target, final_df,
                                                                                          time_horizon, target,
                                                                                          train_final_df,
                                                                                          difference_final_df,
                                                                                          test_final_df, df_for_target)
 
+        #Run xGBoost
         result = instance_of_organiser.start_xgBoost(final_df, label_encoder, X, y, x_train, x_test, y_train, y_test, time_horizon, target, df_for_target)
+
+        #to test all other ml_algorithms, uncomment the following line:
+        #result = instance_of_organiser.start_ML(final_df,label_encoder, X, y, x_train, x_test, y_train, y_test, time_horizon, target, df_for_target)
 
         return result
