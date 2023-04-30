@@ -71,14 +71,15 @@ class ml_algorithms():
 
         if target == 'target_1' or target == 'target_2':
 
-            True_value = [1]
+            True_value = [True]
             indexing_value = []
 
             df = df_for_target
 
             for i in range(len(preds)):
-
-                if preds[i] in True_value:
+                v_list = []
+                v_list.append(preds[i])
+                if label_encoder.inverse_transform(v_list) in True_value:
                     indexing_value.append(i)
 
             values = X_test.iloc[indexing_value].index.values.tolist()
