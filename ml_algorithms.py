@@ -52,7 +52,7 @@ class ml_algorithms():
 
         if target == 'target_3':
             #list(preds).index(True)
-            R = ['3','4']
+            R = [3,4]
             N = []
 
             for i in range(len(preds)):
@@ -66,7 +66,7 @@ class ml_algorithms():
 
             df_validated = df.loc[df[f'valid_{time_horizon}']].copy()
             df_validated[f'change_{time_horizon}'] += 100
-            print(df_validated[f'change_{time_horizon}'].iloc[values])
+            #print(df_validated[f'change_{time_horizon}'].iloc[values])
             print('Stock Performance: ',df_validated[f'change_{time_horizon}'].iloc[values].mean())
             return df_validated
 
