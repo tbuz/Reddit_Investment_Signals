@@ -60,7 +60,6 @@ class ml_algorithms():
                 if preds[i] in R:
                     N.append(i)
 
-            #print(N)
             df = df_for_target
             values = X_test.iloc[N].index.values.tolist()
 
