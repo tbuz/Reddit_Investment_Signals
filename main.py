@@ -14,9 +14,9 @@ if __name__ == '__main__':
     target = 'target_1'
 
     #data submissions_path
-    submissions_path = '/Users/moritzschneider/Downloads/submission_df_pickle' #'submission_df_pickle'
-    config_file = '/Users/moritzschneider/Downloads/sp500_data.csv' #'sp500_data.csv'
-    sp500_data = '/Users/moritzschneider/Downloads/wsb_column_details.csv' #'wsb_column_details.csv'
+    submissions_path = 'submission_df_pickle'
+    config_file = 'sp500_data.csv'
+    sp500_data =  'wsb_column_details.csv'
 
     # if you set your parameter press play!
     #TODO: in eine Klasse // Bash script // Parameter Grenzen
