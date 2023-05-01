@@ -10,6 +10,8 @@ We use natural language processing (NLP) techniques to extract relevant informat
 
 Our repository contains code for data collection, pre-processing, modelling and orchestrating the application. For convenience, we also provide pre-processed datasets and trained models. We welcome contributions from the community to improve the accuracy of our forecasts and extend our coverage to other indices, markets or other subreddits.
 
+----------------------------------------------------------------------------------------
+
 
 #How the repo works:
 
@@ -24,9 +26,9 @@ You only need to work with the main.py !
 For advanced usage:
 If you are experienced with Machine Learning, you can try out different algorihms, which are already in the ml_algorihms.py. To execute them, feel free  to adapt the organiser.py to your needs. 
 
-Feel free to use your own data, tune parameters, explore machine learning algorithms and beat the market! #### #toTheMoon
+Feel free to use your own data, tune parameters, explore machine learning algorithms and beat the market! #toTheMoon
 
 
-
+----------------------------------------------------------------------------------------
 
 Disclaimer: Our predictions are based solely on data analysis and do not constitute financial advice. We recommend that you perform your own due diligence before making any investment decision.
