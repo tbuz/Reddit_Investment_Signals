@@ -26,4 +26,7 @@ If you are experienced with Machine Learning, you can try out different algorihm
 
 Feel free to use your own data, tune parameters, explore machine learning algorithms and beat the market! #toTheMoon
 
+
+
+
 Disclaimer: Our predictions are based solely on data analysis and do not constitute financial advice. We recommend that you perform your own due diligence before making any investment decision.
