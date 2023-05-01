@@ -42,7 +42,7 @@ class feature_engineering():
         sp500_change['date'] = pd.to_datetime(sp500_change['date'])
 
 
-        # Join df with S&P500 changes #TODO
+        # Join df with S&P500 changes
         sp500_df = pd.merge(df[['date', 'change_3m']], sp500_change, on='date', how='left')
         sp500_df = sp500_df.drop(['date', 'change_3m'], axis=1)
         df = pd.concat([df, sp500_df], axis=1)
@@ -88,11 +88,6 @@ class feature_engineering():
 
         #tickers #Check ob mehrere Einträge im Array
         df['unique_ticker_count'] = df['tickers'].apply(lambda x: len(x))
-
-        #author_flair_text #EMOJI DETECTION #TODO
-        # df['emoji_in_author_flair'] = df['author_flair_text'].loc[df['author_flair_text'].notnull()].apply(lambda x: any(is_emoji(y) for y in x))
-        # df['emoji_in_title'] = df['title'].apply(lambda x: any(is_emoji(y) for y in x))
-        # df['emoji_in_selftext'] = df['selftext'].loc[df['selftext_deleted'] == False].apply(lambda x: any(is_emoji(y) for y in x))
 
         return df
 
@@ -149,8 +144,6 @@ class feature_engineering():
         return df
 
     def removing_unwanted_cols(self, df, time_horizon):
-        #TODO: Timeframe
-
         # Remove unwanted columns (except for target, which is dropped later)
         # remove spacy_vector if sv_df is created and concatted to df
         unwanted_columns = ['url', 'change_1d', 'change_3d', 'change_1w', 'change_1m',
@@ -169,6 +162,8 @@ class feature_engineering():
                             'SP500_change_1m', 'SP500_change_3m']
         final_df = df.loc[df[f'valid_3m']].copy().drop(columns=unwanted_columns)
 
+        final_df = final_df.loc[final_df['BUY_signal'] == True]
+        final_df = final_df.reset_index()
         return final_df
     def cut_dataset_to_time_frame(self, final_df, train_split_end, test_split_end ):
         #### Train-Test-Split

@@ -9,7 +9,7 @@ class first_installer():
 
     def install_first_time(self):
         # Define the packages to be installed and imported
-        packages = ['spacytextblob', 'emoji', 'yfinance', 'nltk', 'pandas', 'numpy', 'collections', 'spacy', 'scikit-learn', 'xgboost'] #TODO: Versions
+        packages = ['spacytextblob==4.0.0', 'emoji==2.2.0', 'yfinance', 'nltk==3.8.1', 'pandas==2.0.1', 'numpy==1.24.3', 'collections', 'spacy==3.5.2', 'scikit-learn==1.2.2.', 'xgboost==1.7.5']
 
         # Install packages if they are not already installed
         for package in packages:
@@ -36,8 +36,6 @@ class first_installer():
         import pandas as pd
         import numpy as np
         from collections import Counter
-        #TODO: uncomment next line yfinance
-        #import yfinance as yf
 
         # --- Time formatting
         import datetime
@@ -66,10 +64,6 @@ class first_installer():
         except:
             print('Spacy Load unsuccesful')
 
-        #TODO: CHANGE this Part
-        # Download dataset
-        #!curl -O https://owncloud.hpi.de/s/EAmstS3hKgvWiPr/download #TODO: CHANGE
-        #!tar -zxvf download
 
     def load_data_existing(self, submission_df, config_file, sp500_data):
         # Load dataset
@@ -131,40 +125,6 @@ class first_installer():
             else:
                 id_idx[i] = len(id_idx)
 
-        # https://en.wikipedia.org/wiki/List_of_S%26P_500_companies
-        # Table accessible via: //*[@id="constituents"] or #constituents
-
-        #TODO:
-        # sp500_wiki = pd.read_html('/Users/moritzschneider/Downloads/220924_SP500_wiki.html')[0]
-        # sp500_symbols = sp500_wiki['Symbol'].tolist()
-        #
-        # sp500_symbols = [s.replace('.', '-') for s in sp500_symbols]
-        #
-        # print(len(sp500_symbols))  # contains 505 symbols in total
-        # print(sp500_symbols[:10])
-        #
-        # stock_idx = {}
-        # for i, s in enumerate(sp500_symbols):
-        #     stock_idx[s] = i
-
-        # stock_idx
-
-        # Extract S&P 500 stock market data from Yahoo! Finance API
-        # sp500_data = yf.Ticker('^GSPC')
-        #
-        # # Extract S&P 500 price history
-        # sp500_prices = sp500_data.history(start="2018-01-01", end="2022-07-03")
-
-        # sp500_prices = pd.read_csv('/Users/moritzschneider/Downloads/sp500_data.csv')
-        # sp500_prices['SP500_change_1d'] = (sp500_prices['Close'].shift(periods=-1)*100/sp500_prices['Close'])-100
-        # sp500_prices['SP500_change_3d'] = (sp500_prices['Close'].shift(periods=-3)*100/sp500_prices['Close'])-100
-        # sp500_prices['SP500_change_1w'] = (sp500_prices['Close'].shift(periods=-7)*100/sp500_prices['Close'])-100
-        # sp500_prices['SP500_change_1m'] = (sp500_prices['Close'].shift(periods=-30)*100/sp500_prices['Close'])-100
-        # sp500_prices['SP500_change_3m'] = (sp500_prices['Close'].shift(periods=-90)*100/sp500_prices['Close'])-100
-        # sp500_change = sp500_prices[['SP500_change_1d', 'SP500_change_3d', 'SP500_change_1w', 'SP500_change_1m', 'SP500_change_3m']]
-        #
-        # print(sp500_change)
-        #
         # sp500_change['date'] = sp500_change.index.strftime('%Y-%m-%d')
         sp500_change = pd.read_csv(sp500_data) #sp500_wiki
 
