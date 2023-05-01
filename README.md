@@ -24,7 +24,7 @@ You only need to work with the main.py !
 For advanced usage:
 If you are experienced with Machine Learning, you can try out different algorihms, which are already in the ml_algorihms.py. To execute them, feel free  to adapt the organiser.py to your needs. 
 
-Feel free to use your own data, tune parameters, explore machine learning algorithms and beat the market! #toTheMoon
+Feel free to use your own data, tune parameters, explore machine learning algorithms and beat the market! #### #toTheMoon
 
 
 
