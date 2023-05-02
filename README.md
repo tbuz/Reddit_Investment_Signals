@@ -1,6 +1,6 @@
 # Reddit_Investment_Signals
 
-#About this project
+## About this project
 
 Welcome to the "Reddit_Investment_Signals" repository, where we use the popular subreddit r/wallstreetbets to predict stock values of the S&P500.
 
@@ -12,23 +12,44 @@ Our repository contains code for data collection, pre-processing, modelling and 
 
 ----------------------------------------------------------------------------------------
 
+## Dataset download
 
-#How the repo works:
+1. Download the dataset from our Dropbox link: https://www.dropbox.com/scl/fo/6jr6i3lat3v9u1kjq5n1k/h?dl=0&rlkey=ofwk0kev3qtqui0edexvv912b
+(size of the zipped file ~1.4 GB, decompressed ~7.6 GB)
+2. Decompress the contents of the .zip file into the folder `datasets/`
+3. Move the folder into the first level of the repository folder (`/Reddit_Investment_Signals/datasets`)
 
-For beginners:
-1. Step: Clone the repo
-2. Step: Check if the dataset fits your needs
-3. Step: Adapt the parameters in Main.py
-4. Step: execute Main.py
 
-You only need to work with the main.py !
+----------------------------------------------------------------------------------------
 
-For advanced usage:
-If you are experienced with Machine Learning, you can try out different algorihms, which are already in the ml_algorihms.py. To execute them, feel free  to adapt the organiser.py to your needs. 
+
+## How the repo works:
+
+First time setup:
+1. Step: Use setup.py to install required packages
+2. Step: Adapt the parameters in `main.py` if desired
+3. Step: Execute `main.py`
+
+`main.py` covers all necessary functionality, so it is the only file you need to work with.
+
+----------------------------------------------------------------------------------------
+
+## How to modify the model setup
+If you are experienced with Machine Learning, you can try out different algorihms. 
+We have prepared alternatives in `ml_algorihms.py`. 
+To execute them, feel free  to adapt `organiser.py` to your needs. 
 
 Feel free to use your own data, tune parameters, explore machine learning algorithms and beat the market! #toTheMoon
 
 
 ----------------------------------------------------------------------------------------
 
-Disclaimer: Our predictions are based solely on data analysis and do not constitute financial advice. We recommend that you perform your own due diligence before making any investment decision.
+## Disclaimer
+Our predictions are based solely on historic data analysis and do not constitute financial advice. We recommend that you perform your own due diligence and investigate various information sources before making an investment decision.
+
+----------------------------------------------------------------------------------------
+
+## Citation 
+
+The corresponding paper for this project is currently under submission for double blind review at the IEEE DSAA 2023 conference.
+Once a publication is possible, we will add details on how to cite this project.
