@@ -4,7 +4,21 @@ import datetime
 class feature_engineering():
     def __int__(self):
         self
-
+"""
+    ### Features in data:
+    #Investimentbanks - will give you information, if the stock was rated by one of these banks:
+    'Morgan Stanley', 'Credit Suisse', 'Wells Fargo',
+    'Citigroup', 'Barclays', 'Deutsche Bank', 'UBS', 'Raymond James',
+    'JP Morgan', 'B of A Securities', 'BMO Capital', 'Keybanc',
+    'RBC Capital', 'Goldman Sachs', 'Mizuho', 'Stifel', 'Piper Sandler',
+    'Baird', 'Jefferies', 'Oppenheimer'
+    
+    #Stock indicators: Mean Average of {x} days
+    'MA07', 'MA30', 'MA90'
+     
+    # 
+    'prev_1w', 'prev_3d', 'prev_1d',
+"""
     def Create_additional_potential_target_features(self, submission_df_sm, sp500_change):
         df = submission_df_sm.copy()
 
@@ -36,6 +50,7 @@ class feature_engineering():
         df['valid_3m'] = df['change_3m'].notnull()
 
         #df['date'] = df.index
+        # Date Feature
         sp500_change['date'] = sp500_change.index
 
         df['date'] = pd.to_datetime(df['date'])
@@ -53,46 +68,55 @@ class feature_engineering():
         # Feature Engineering by Moritz
 
         #author_premium
+        # features shows if the author of the post has a reddit premium account
         df.loc[df['author_premium'] == 1.0, 'author_premium_binary'] = True
         df.loc[df['author_premium_binary'] != True, 'author_premium_binary'] = False
 
         #send_replies
+        # features shows if replies were send
         df.loc[df['send_replies'] == 1.0, 'send_replies_binary'] = True
         df.loc[df['send_replies_binary'] != True, 'send_replies_binary'] = False
 
         #total_awards_received
+        # features shows if the post got a reddit award
         df.loc[df['total_awards_received'] == 0.0, 'total_awards_received_binary'] = False
         df.loc[df['total_awards_received_binary'] != False, 'total_awards_received_binary'] = True
 
 
         #is_original_content
+        # features shows if content is original or from other sources
         df.loc[df['is_original_content'] == 1.0, 'is_original_content_binary'] = True
         df.loc[df['is_original_content_binary'] != True, 'is_original_content_binary'] = False
 
 
         #is_reddit_media_domain
+        # features shows if post contains media
         df.loc[df['is_reddit_media_domain'] == 1.0, 'is_reddit_media_domain_binary'] = True
         df.loc[df['is_reddit_media_domain_binary'] != True, 'is_reddit_media_domain_binary'] = False
 
         #is_self
+        # features shows if
         df.loc[df['is_self'] == 1.0, 'is_self_binary'] = True
         df.loc[df['is_self_binary'] != True, 'is_self_binary'] = False
         #df['is_self_binary'].value_counts()
 
         #is_video
+        # features shows if post is a video
         df.loc[df['is_video'] == 1.0, 'is_video_binary'] = True
         df.loc[df['is_video_binary'] != True, 'is_video_binary'] = False
 
         #selftext #Extra Feld
+        # features shows if post was deleted
         df['selftext_deleted'] = df['selftext'].apply(lambda x: x in ['deleted', "[removed]", ''])
 
         #tickers #Check ob mehrere Einträge im Array
+        # features shows if post has stock tickers
         df['unique_ticker_count'] = df['tickers'].apply(lambda x: len(x))
 
         return df
 
     # Bag Of Tickers Vector
-    def calculate_BoT(tickers_counter):
+    def calculate_BoT(self,tickers_counter, stock_idx):
         BoT_vector = np.zeros([len(stock_idx)], dtype=int)
         for ticker in tickers_counter.keys():
             idx = stock_idx[ticker]
@@ -100,7 +124,7 @@ class feature_engineering():
             BoT_vector[idx] += count
         return BoT_vector
 
-    def transform_cat_to_num_feature(self, df):
+    def transform_cat_to_num_feature(self, df, author_idx, author_flair_idx, id_idx, link_flair_idx):
         try:
           df['author'] = df['author'].apply(lambda x: author_idx[x])
           df['author_flair_text'] = df['author_flair_text'].apply(lambda x: author_flair_idx[x])
