@@ -2,23 +2,24 @@ import pandas as pd
 import numpy as np
 import datetime
 class feature_engineering():
+    """
+        ### Features in data:
+        #Investimentbanks - will give you information, if the stock was rated by one of these banks:
+        'Morgan Stanley', 'Credit Suisse', 'Wells Fargo',
+        'Citigroup', 'Barclays', 'Deutsche Bank', 'UBS', 'Raymond James',
+        'JP Morgan', 'B of A Securities', 'BMO Capital', 'Keybanc',
+        'RBC Capital', 'Goldman Sachs', 'Mizuho', 'Stifel', 'Piper Sandler',
+        'Baird', 'Jefferies', 'Oppenheimer'
+
+        #Stock indicators: Mean Average of {x} days
+        'MA07', 'MA30', 'MA90'
+
+        # development of stock in the last x days
+        'prev_1w', 'prev_3d', 'prev_1d',
+    """
     def __int__(self):
         self
-"""
-    ### Features in data:
-    #Investimentbanks - will give you information, if the stock was rated by one of these banks:
-    'Morgan Stanley', 'Credit Suisse', 'Wells Fargo',
-    'Citigroup', 'Barclays', 'Deutsche Bank', 'UBS', 'Raymond James',
-    'JP Morgan', 'B of A Securities', 'BMO Capital', 'Keybanc',
-    'RBC Capital', 'Goldman Sachs', 'Mizuho', 'Stifel', 'Piper Sandler',
-    'Baird', 'Jefferies', 'Oppenheimer'
-    
-    #Stock indicators: Mean Average of {x} days
-    'MA07', 'MA30', 'MA90'
-     
-    # 
-    'prev_1w', 'prev_3d', 'prev_1d',
-"""
+
     def Create_additional_potential_target_features(self, submission_df_sm, sp500_change):
         df = submission_df_sm.copy()
 
