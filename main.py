@@ -14,9 +14,9 @@ if __name__ == '__main__':
     target = 'target_1'
 
     #data submissions_path
-    submissions_path = 'submission_df_pickle'
-    config_file = 'sp500_data.csv'
-    sp500_data = 'wsb_column_details.csv'
+    submissions_path = 'datasets/submission_df_pickle'
+    config_file = 'datasets/sp500_data.csv'
+    sp500_data = 'datasets/wsb_column_details.csv'
 
     # if you set your parameter press play!
     runner = runner()
