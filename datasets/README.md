@@ -2,10 +2,9 @@
 
 ## Dataset download
 
-1. Download the dataset from our Dropbox link: https://www.dropbox.com/scl/fo/6jr6i3lat3v9u1kjq5n1k/h?dl=0&rlkey=ofwk0kev3qtqui0edexvv912b
-(size of the zipped file ~1.4 GB, decompressed ~7.6 GB)
-2. Decompress the contents of the .zip file into the folder `datasets/`
-3. Move the folder into the first level of the repository folder (`/Reddit_Investment_Signals/datasets`)
+The dataset has a size of approx. 7.6 GB (1.4 GB zipped).
+Due to changes to Reddit's Terms of Use, we do not provide an openly available download link for the dataset.
+Please contact us if you have questions about the dataset.
 
 ----------------------------------------------------------------------------------------
 
